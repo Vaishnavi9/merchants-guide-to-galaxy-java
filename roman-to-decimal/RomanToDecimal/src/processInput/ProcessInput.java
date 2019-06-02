@@ -29,10 +29,6 @@ public class ProcessInput {
 		    mapOfGalacticValues=galacticValuesToRomans(split);
 		    
 		    
-		    System.out.println(mapOfGalacticValues.get("glob"));
-		    System.out.println(mapOfGalacticValues.get("prok"));
-		    System.out.println(mapOfGalacticValues.get("pish"));
-		    System.out.println(mapOfGalacticValues.get("tegj"));
 		    
 		    /*Iterator<String> itr = l.iterator();
 		    while (itr.hasNext()) 
@@ -82,8 +78,9 @@ public class ProcessInput {
 			
 			
 			for (String[] strings : processList) {
-				if(strings[2].matches("I||V||X||C||L||M")) {
-						//System.out.println(strings[2]);
+				
+				if(strings.length==3 && strings[2].matches("I||V||X||C||L||M")) {
+						
 						galacticToRoman.put(strings[0], strings[2]);
 				}
 			}
@@ -95,7 +92,10 @@ public class ProcessInput {
 		
 		
 		
+		//Find the value of iron, silver, gold
+		 
 		
-		
+
+
 
 }
