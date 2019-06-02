@@ -106,7 +106,9 @@ public class ProcessInput {
 		} 
 		
 
-		
+		public static void calculateMetalValues(List<String[]> expression) {
+			//yet to do
+		}
 		
 
 
