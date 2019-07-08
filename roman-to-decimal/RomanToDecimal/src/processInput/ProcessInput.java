@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ public class ProcessInput {
 	
 	//Main list to be processed..
 	static List<String[]> splitInputValues=new ArrayList<String[]>();
-	//mapping romans to galactic values
+	//mapping Romans to galactic values
 	static Map<String, String> mapOfGalacticValues=new HashMap<String,String>();
 	//conatins only the expression string array
 	static List<String[]> expressions=new ArrayList<String[]>(); 
@@ -24,7 +23,7 @@ public class ProcessInput {
 		
 		public static void main(String[] args) 
 		  { 
-		    List l = readFileInList("C:\\Project Area\\Merchants-Guide-To-Galaxy-Java\\merchants-guide-to-galaxy-java\\roman-to-decimal\\RomanToDecimal\\input.txt"); 
+		    List<String> l = readFileInList("C:\\Project Area\\Merchants-Guide-To-Galaxy-Java\\merchants-guide-to-galaxy-java\\roman-to-decimal\\RomanToDecimal\\input.txt"); 
 		    
 		    splitInputValues=processTheValuesOfArrays(l);
 		    
@@ -32,11 +31,13 @@ public class ProcessInput {
 		    
 		    expressions=findExpressions(splitInputValues);
 		    
+		    
+		    calculateMetalValues(expressions);
 		    /*Iterator<String> itr = l.iterator();
 		    while (itr.hasNext()) 
 		      System.out.println(itr.next());*/
 		    
-		    System.out.println(expressions.size());
+		    //System.out.println(expressions.size());
 		  } 
 	
 		
@@ -61,7 +62,7 @@ public class ProcessInput {
 		public static List<String[]>  processTheValuesOfArrays(List<String> listOfLines) {
 			
 			List<String[]> tempSplit=new ArrayList<String[]>();
-			
+
 			//converting listOfLines into an arrays of strings  
 			for (int i = 0; i < listOfLines.size(); i++) {
 				tempSplit.add(listOfLines.get(i).split(" "));
@@ -98,16 +99,33 @@ public class ProcessInput {
 					if(strings[strings.length-1].contains("Credits")
 					&& strings[i].matches(".*\\d.*")) {
 						expressions.add(strings);	
-						//System.out.println(strings[i]);
+						System.out.println(strings[i]);
 					}
 				}
 			}
 			return expressions;
 		} 
 		
-
+		//method takes expressions in galactic terms as input and gives back the value of metals
 		public static void calculateMetalValues(List<String[]> expression) {
-			//yet to do
+			 
+			List<String> romanValues=new ArrayList<String>();
+			
+			for (String[] strings : expression) {
+				String romanValue="";
+				for (int i = 0; i < strings.length; i++) {
+					if(mapOfGalacticValues.keySet().contains(strings[i])) {
+						
+					romanValue+=mapOfGalacticValues.get(strings[i]);
+						
+					}
+					//System.out.print(romanValue);
+					romanValues.add(romanValue);
+					romanValue="";
+				}
+					System.out.println();
+			}
+			
 		}
 		
 
