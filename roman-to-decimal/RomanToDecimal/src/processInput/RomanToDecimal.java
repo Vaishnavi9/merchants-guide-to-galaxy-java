@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RomanToDecimal {
 	
-	HashMap<String,Integer> romanMap=new HashMap<String,Integer>();
+	static HashMap<String,Integer> romanMap=new HashMap<String,Integer>();
 	
 	
 	
@@ -32,7 +32,7 @@ public class RomanToDecimal {
     
     
     //Actual Conversion
-    public Integer conversionFromRomanToDecimal(String[] args) {
+    public static Integer conversionFromRomanToDecimal(String[] args) {
     String romanNum="xxxcx";
     System.out.println(RomanToDecimal.filterInvalids(romanNum.toUpperCase()));
     romanMap.put("I", 1);

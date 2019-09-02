@@ -99,7 +99,7 @@ public class ProcessInput {
 					if(strings[strings.length-1].contains("Credits")
 					&& strings[i].matches(".*\\d.*")) {
 						expressions.add(strings);	
-						System.out.println(strings[i]);
+						//System.out.println(strings[i]);
 					}
 				}
 			}
@@ -119,11 +119,32 @@ public class ProcessInput {
 					romanValue+=mapOfGalacticValues.get(strings[i]);
 						
 					}
-					//System.out.print(romanValue);
+				//System.out.print(romanValue);
+				
 					romanValues.add(romanValue);
 					romanValue="";
 				}
-					System.out.println();
+					//System.out.println();
+			}
+			
+			
+			
+			
+			
+			for (String string : romanValues) {
+				
+				System.out.print(string+" ");
+			}
+			
+			
+			
+			for (String string : romanValues) {
+				
+				
+				String[] s=string.split("");
+				Integer t=RomanToDecimal.conversionFromRomanToDecimal(s);
+				//System.out.println(string);
+				System.out.println(t);
 			}
 			
 		}
