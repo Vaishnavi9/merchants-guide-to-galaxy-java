@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ProcessInput {
 	//Reading file and putting every line from the file in an list of string at once.
-	
+	//required declarations
 	static Map<String, String> mapOfGalacticValues=new HashMap<String,String>();
 	static Map<String, String> questions = new HashMap<String, String>();  
 	static ArrayList<String> metalValues = new ArrayList<String>(); 
