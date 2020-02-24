@@ -8,12 +8,17 @@ import java.util.Map;
 
 public class ConversionCriteria {
 
-	private static final Character[] NonRepeatingRomanNumerals = {'D', 'L', 'V'};
-	private static final Character[] RepeatingRomanNumerals = {'I','V','X','M'};
+	private static final Character[] ROMAN_NUMERALS_NO_REPEATATION = {'D', 'L', 'V'};
+	private static final Character[] ROMAN_NUMERALS_REPEATING = {'I','V','X','M'};
 	private static Map<Character,Integer> RepeatableLiteralsCount = getRepeatableLiteralsCount();
 
 	private static Map<Character,Integer> getRepeatableLiteralsCount(){
 		Map<Character,Integer>map = new HashMap<Character,Integer>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				put('I', 0);
 				put('X', 0);
@@ -28,6 +33,11 @@ public class ConversionCriteria {
 
 	private static Map<Character,Integer> getNonRepeatableLiteralsCount(){
 		Map<Character,Integer>map = new HashMap<Character,Integer>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				put('V', 0);
 				put('L', 0);
@@ -39,6 +49,11 @@ public class ConversionCriteria {
 
 	private static Map<Integer, Integer[]> ROMAN_SUBTRACTABLE_MAPPING = Collections.unmodifiableMap(
 			new HashMap<Integer, Integer[]>() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				{
 					put(1, new Integer[] {5, 10});
 					put(5, new Integer[] {});
@@ -52,6 +67,11 @@ public class ConversionCriteria {
 
 	private static Map<Character, Integer> ROMAN_TO_NUMERIC_MAPPING = Collections.unmodifiableMap(
 			new HashMap<Character, Integer>() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
 				{
 					put('I', 1);
 					put('V', 5);
@@ -68,14 +88,14 @@ public class ConversionCriteria {
 	 * 
 	 */
 	public static void checkLiteralCountValidity(Character CurrentLiteral){
-		if(checkIfLiteralPresent(NonRepeatingRomanNumerals, CurrentLiteral)){
+		if(checkIfLiteralPresent(ROMAN_NUMERALS_NO_REPEATATION, CurrentLiteral)){
 			NonRepeatableLiteralsCount.put(CurrentLiteral, NonRepeatableLiteralsCount.get(CurrentLiteral) + 1);
 			if(NonRepeatableLiteralsCount.containsValue(3)){
 				System.err.println("Error : Roman Numeral V,L,D cannot be repeated.");	
 				System.exit(0);
 			}
 		}
-		else if(checkIfLiteralPresent(RepeatingRomanNumerals, CurrentLiteral)){
+		else if(checkIfLiteralPresent(ROMAN_NUMERALS_REPEATING, CurrentLiteral)){
 			Character keyForValueContainingThree = getKeyForValueContainingThree();
 			if(keyForValueContainingThree != '\0'){
 				if (CurrentLiteral.equals(keyForValueContainingThree)){
@@ -113,9 +133,6 @@ public class ConversionCriteria {
 	/**
 	 * checks if currentLiteral is smaller than the previous one. This rule is applied when repeatable literals can
 	 * occur 4 times only if the 3rd and 4th occurance has a smaller value between them.
-	 * @param CurrentLiteral
-	 * @param keyForValueContainingThree
-	 * @return
 	 */
 	private static boolean CurrentLiteralSmallerThanPrevious(char CurrentLiteral, char keyForValueContainingThree){
 		if (ROMAN_TO_NUMERIC_MAPPING.get(CurrentLiteral)> ROMAN_TO_NUMERIC_MAPPING.get(keyForValueContainingThree)){
@@ -130,10 +147,6 @@ public class ConversionCriteria {
 
 	/**
 	 * Applies the subtaction logic and checks if the element is subtractable by the other or not.
-	 * @param lastDecimal
-	 * @param decimal
-	 * @param lastNumber
-	 * @return
 	 */
 	public static float subtractionLogic(Float lastDecimal, Float decimal, Float lastNumber){
 		if(Arrays.asList(ROMAN_SUBTRACTABLE_MAPPING.get(Math.round(decimal))).contains(Math.round(lastNumber))){
@@ -146,9 +159,6 @@ public class ConversionCriteria {
 
 	/**
 	 * Checks if an element is present in an array
-	 * @param array
-	 * @param literal
-	 * @return
 	 */
 	public static boolean checkIfLiteralPresent(Character[] array, Character literal){
 		boolean result = false;

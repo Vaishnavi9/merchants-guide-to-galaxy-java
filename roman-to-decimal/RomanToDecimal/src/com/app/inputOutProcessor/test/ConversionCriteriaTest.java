@@ -26,10 +26,6 @@ public class ConversionCriteriaTest {
 	}
 
 	@Test
-
-	/**
-	 * Test whether the subtraction logic is handled correctly.
-	 */
 	public void testSubtractionLogic(){
 		float result = ConversionCriteria.subtractionLogic(52f, 10f, 50f);
 		Assert.assertEquals(42f, result, 00.00);

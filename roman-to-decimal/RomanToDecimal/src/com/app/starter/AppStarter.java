@@ -14,12 +14,12 @@ public class AppStarter {
 		if (args.length != 0)
 			filePath = args[0];
 		try{
-			ProcessInput.ProcessFile(filePath);
-			ProcessInput.MapTokentoIntegerValue();
-			ProcessOutput.processReplyForQuestion();
+			ProcessInput.readFile(filePath);
+			ProcessInput.mapGalacticToIntegerValue();
+			ProcessOutput.processAnswerToQuestion();
 		}
 		catch(Exception e){
-			System.out.println("Oops !! File Not Found ");
+			System.out.println("Cannot find the file, please check if it is placed correctly..");
 		}
 	  }
 	

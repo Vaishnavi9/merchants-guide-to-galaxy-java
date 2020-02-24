@@ -35,9 +35,6 @@ public class RomanToDecimalTest{
 	}
 
 	@Test
-	/**
-	 * Test the scenario of Roman to Numeric Conversion.
-	 */
 	public void testRomanToDecimal(){
 		RomanToDecimal romanToDecimal = new RomanToDecimal();
 		float numericValue = romanToDecimal.romanToDecimal(romanNumeral);
@@ -45,12 +42,9 @@ public class RomanToDecimalTest{
 	}
 
 	@Test
-	/**
-	 * Test the scenario where Non repeatable Roman Numeral repeats 4 times successively thereby throwing error.
-	 */
 	public void testRomanToDecimalFailing(){
 		RomanToDecimal romanToDecimal1 = new RomanToDecimal();
-		float value = romanToDecimal1.romanToDecimal(anotherRomanNumeral);
+		romanToDecimal1.romanToDecimal(anotherRomanNumeral);
 		Assert.assertEquals("Error : Roman Numeral M cannot repeat 4 times successively", errContent.toString());
 	}
 

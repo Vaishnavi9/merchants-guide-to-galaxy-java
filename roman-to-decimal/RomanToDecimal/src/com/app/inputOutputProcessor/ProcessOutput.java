@@ -12,8 +12,8 @@ public class ProcessOutput extends ProcessInput{
 	 * processReplyForQuestion() itertates over the questionAndReply map that contain all the valid queries as keys.
 	 * It further invokes processReply() on each key for processing the response.
 	 */
-	public static void processReplyForQuestion(){
-		Map<String, String> map = questionAndReply;
+	public static void processAnswerToQuestion(){
+		Map<String, String> map = answerToQuestion;
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			processReply(entry.getKey());
 		}
@@ -38,7 +38,7 @@ public class ProcessOutput extends ProcessInput{
 			ArrayList<String> tokenValueToRoman = new ArrayList<String>();
 			ArrayList<String> tokenValue = splitQuery(query);
 			for (int i = 0; i < tokenValue.size(); i++) {
-				tokenValueToRoman.add(tokenRomanValueMapping.get(tokenValue.get(i)));
+				tokenValueToRoman.add(galacticRomanValueMapping.get(tokenValue.get(i)));
 			}
 			float value = new RomanToDecimal().romanToDecimal(tokenValueToRoman.toString());
 			tokenValue.add("is");tokenValue.add(Float.toString(value));
@@ -60,17 +60,17 @@ public class ProcessOutput extends ProcessInput{
 			ArrayList<String> tokenValueToRoman = new ArrayList<String>();
 			String element = null;
 			for (int i = 0; i < tokenValue.size(); i++) {
-				if(tokenRomanValueMapping.get(tokenValue.get(i)) != null){
-					tokenValueToRoman.add(tokenRomanValueMapping.get(tokenValue.get(i)));
+				if(galacticRomanValueMapping.get(tokenValue.get(i)) != null){
+					tokenValueToRoman.add(galacticRomanValueMapping.get(tokenValue.get(i)));
 				}
-				else if (elementValueList.get(tokenValue.get(i)) != null){
+				else if (metalValueList.get(tokenValue.get(i)) != null){
 					element = tokenValue.get(i);
 				}
 				else{
 					System.err.println(query+" : I have no idea what you are talking about");
 				}
 			}
-			float elementValue = (new RomanToDecimal().romanToDecimal(tokenValueToRoman.toString()) * elementValueList.get(element));
+			float elementValue = (new RomanToDecimal().romanToDecimal(tokenValueToRoman.toString()) * metalValueList.get(element));
 			tokenValue.add("is");tokenValue.add(Float.toString(elementValue));tokenValue.add("Credits");
 			System.out.println(query+" "+outputFormatter(tokenValue));
 		}

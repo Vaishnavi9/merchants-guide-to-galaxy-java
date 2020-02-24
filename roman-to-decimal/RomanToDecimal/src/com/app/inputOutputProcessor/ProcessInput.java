@@ -14,17 +14,17 @@ public class ProcessInput{
 
 	/**
 	 * Below are sample of the kind of values each map would hold.
-	 * tokenRomanValueMapping : {pish=X, tegj=L, prok=V, glob=I}
-	 * tokenIntegerValue :{pish=10.0, tegj=50.0, prok=5.0, glob=1.0}
+	 * galacticRomanValueMapping : {pish=X, tegj=L, prok=V, glob=I}
+	 * galacticIntegerValue :{pish=10.0, tegj=50.0, prok=5.0, glob=1.0}
 	 * questionAndReply :{how much is pish tegj glob glob ?, how many Credits is glob prok Iron ?}
-	 * missingValues :[glob glob Silver is 34 Credits, glob prok Gold is 57800 Credits, pish pish Iron is 3910 Credits]
-	 * elementValueList :{Gold=14450.0, Iron=195.5, Silver=17.0}	
+	 * answerToQuestion :[glob glob Silver is 34 Credits, glob prok Gold is 57800 Credits, pish pish Iron is 3910 Credits]
+	 * metalValueList :{Gold=14450.0, Iron=195.5, Silver=17.0}	
 	 */
-	static Map<String, String> tokenRomanValueMapping = new HashMap<String, String>();
-	static Map<String, Float> tokenIntegerValue = new HashMap<String, Float>(); //{pish=10.0, tegj=50.0, prok=5.0, glob=1.0}
-	static Map<String, String> questionAndReply = new HashMap<String, String>();  //{how much is pish tegj glob glob ?, how many Credits is glob prok Iron ?}
-	static ArrayList<String> missingValues = new ArrayList<String>(); // [glob glob Silver is 34 Credits, glob prok Gold is 57800 Credits, pish pish Iron is 3910 Credits]
-	static Map<String, Float> elementValueList = new HashMap<String, Float>(); //{Gold=14450.0, Iron=195.5, Silver=17.0}
+	static Map<String, String> galacticRomanValueMapping = new HashMap<String, String>();
+	static Map<String, Float> galacticIntegerValue = new HashMap<String, Float>(); //{pish=10.0, tegj=50.0, prok=5.0, glob=1.0}
+	static Map<String, String> answerToQuestion = new HashMap<String, String>();  //{how much is pish tegj glob glob ?, how many Credits is glob prok Iron ?}
+	static ArrayList<String> metalValues = new ArrayList<String>(); // [glob glob Silver is 34 Credits, glob prok Gold is 57800 Credits, pish pish Iron is 3910 Credits]
+	static Map<String, Float> metalValueList = new HashMap<String, Float>(); //{Gold=14450.0, Iron=195.5, Silver=17.0}
 
 
 	/**
@@ -33,7 +33,7 @@ public class ProcessInput{
 	 * @param filePath
 	 * @throws IOException
 	 */
-	public static void ProcessFile(String filePath) throws IOException {
+	public static void readFile(String filePath) throws IOException {
 		BufferedReader bufferedReader = null;
 		if (filePath == null){
 			InputStream in = ProcessInput.class.getResourceAsStream("Input");
@@ -58,13 +58,13 @@ public class ProcessInput{
 		String arr[] = line.split("((?<=:)|(?=:))|( )");
 
 		if (line.endsWith("?")){
-			questionAndReply.put(line,"");
+			answerToQuestion.put(line,"");
 		}
 		else if (arr.length == 3 && arr[1].equalsIgnoreCase("is")){
-			tokenRomanValueMapping.put(arr[0], arr[arr.length-1]);	
+			galacticRomanValueMapping.put(arr[0], arr[arr.length-1]);	
 		}
 		else if(line.toLowerCase().endsWith("credits")){
-			missingValues.add(line);
+			metalValues.add(line);
 		}
 	}
 
@@ -72,13 +72,13 @@ public class ProcessInput{
 	 * Maps tokens to Roman equivalent  
 	 * {pish=X, tegj=L, prok=V, glob=I}
 	 */
-	public static void MapTokentoIntegerValue(){
+	public static void mapGalacticToIntegerValue(){
 
-		Iterator<?> it = tokenRomanValueMapping.entrySet().iterator();
+		Iterator<?> it = galacticRomanValueMapping.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<?, ?> token = (Map.Entry<?, ?>)it.next();
 			float integerValue = new RomanToDecimal().romanToDecimal(token.getValue().toString());
-			tokenIntegerValue.put(token.getKey().toString(), integerValue);
+			galacticIntegerValue.put(token.getKey().toString(), integerValue);
 		}
 		mapMissingEntities();
 	}
@@ -87,8 +87,8 @@ public class ProcessInput{
 	 * FInds the value of elements by decoding queries like [glob glob Silver is 34 Credits]
 	 */
 	private static void mapMissingEntities(){
-		for (int i = 0; i < missingValues.size(); i++) {
-			deCodeMissingQuery(missingValues.get(i));
+		for (int i = 0; i < metalValues.size(); i++) {
+			calculateMetalValues(metalValues.get(i));
 		}
 	}
 	
@@ -97,7 +97,7 @@ public class ProcessInput{
 	 * elementValueList :{Gold=14450.0, Iron=195.5, Silver=17.0}
 	 * @param query
 	 */
-	private static void deCodeMissingQuery(String query){
+	private static void calculateMetalValues(String query){
 		String array[] = query.split("((?<=:)|(?=:))|( )");
 		int splitIndex = 0;
 		int creditValue = 0; String element= null; String[] valueofElement = null;
@@ -114,10 +114,10 @@ public class ProcessInput{
 
 		StringBuilder stringBuilder = new StringBuilder();
 		for (int j = 0; j < valueofElement.length; j++) {
-			stringBuilder.append(tokenRomanValueMapping.get(valueofElement[j]));
+			stringBuilder.append(galacticRomanValueMapping.get(valueofElement[j]));
 		}
 		float valueOfElementInDecimal = new RomanToDecimal().romanToDecimal(stringBuilder.toString());
-		elementValueList.put(element, creditValue/valueOfElementInDecimal);
+		metalValueList.put(element, creditValue/valueOfElementInDecimal);
 	}
 
 }
